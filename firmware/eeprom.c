@@ -24,6 +24,14 @@
  */
 
 #include "stm32f10x.h"
+#include "stm32f10x_i2c.h"
+#include "stm32f10x_dma.h"
+#include "stm32f10x_exti.h"
+#include "stm32f10x_gpio.h"
+#include "stm32f10x_rcc.h"
+#include "stm32f10x_misc.h"
+#include <stdbool.h>
+
 #include "eeprom.h"
 #include "myeeprom.h"
 #include "gui.h"
@@ -110,7 +118,7 @@ void eeprom_init_current_model() {
 #endif
 	g_model.name[MODEL_NAME_LEN-1] =  0;
 	g_model.protocol = PROTO_PPM;
-	g_model.extendedLimits = TRUE;
+	g_model.extendedLimits = true;
 	g_model.ppmFrameLength = 8;
 	g_model.ppmDelay = 6;
 	g_model.ppmNCH = 8;
@@ -292,7 +300,7 @@ void eeprom_init(void) {
 		gui_popup(GUI_MSG_EEPROM_INVALID, 0);
 		g_eeGeneral.ownerName[sizeof(g_eeGeneral.ownerName) - 1] = 0;
 		g_eeGeneral.contrast = (LCD_CONTRAST_MIN+LCD_CONTRAST_MAX)/2;
-		g_eeGeneral.enablePpmsim = FALSE;
+		g_eeGeneral.enablePpmsim = false;
 		g_eeGeneral.vBatCalib = 100;
 		// memset(&g_eeGeneral, 0, sizeof(EEGeneral));
 		// rechecksum - otherwise it will overwrite

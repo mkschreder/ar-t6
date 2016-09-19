@@ -23,7 +23,14 @@
  *
  */
 
-#include "stm32f10x.h"
+#include <stm32f10x.h>
+#include <stm32f10x_tim.h>
+#include <stm32f10x_rcc.h>
+#include <stm32f10x_gpio.h>
+#include <stm32f10x_misc.h>
+#include <stm32f10x_dma.h>
+#include <stm32f10x_adc.h>
+
 #include "sticks.h"
 #include "keypad.h"
 #include "tasks.h"

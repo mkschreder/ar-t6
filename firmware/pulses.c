@@ -28,6 +28,11 @@
  */
 
 #include "stm32f10x.h"
+#include <stm32f10x_tim.h>
+#include <stm32f10x_rcc.h>
+#include <stm32f10x_gpio.h>
+#include <stm32f10x_misc.h>
+
 #include "tasks.h"
 
 #include "art6.h"
@@ -65,7 +70,7 @@ volatile int16_t g_ppmIns[8];
 volatile uint8_t ppmInValid;
 static volatile uint8_t ppmInState = 0; //0=unsync 1..8= wait for value i-1
 
-static bool trainer_out = FALSE;
+static bool trainer_out = false;
 
 void pulses_setup(void);
 void pulses_setup_ppm(uint8_t proto);
@@ -137,7 +142,7 @@ void pulses_init(void)
 
 	//ToDo: Set these properly before calling init.
 	Current_protocol = g_model.protocol + 10;		// Not the same!
-	SlaveMode = FALSE;
+	SlaveMode = false;
 
 	pulses_setup();
 }

@@ -17,6 +17,7 @@
 #define _KEYPAD_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
 #define KEYPAD_EXTI_LINES	(EXTI_Line12 | EXTI_Line13 | EXTI_Line14)
 #define ROTARY_EXTI_LINES	(EXTI_Line15)

@@ -16,6 +16,8 @@
 #ifndef _LCD_H
 #define _LCD_H
 
+#include <stdbool.h>
+
 #define LCD_WIDTH		128
 #define LCD_HEIGHT		64
 

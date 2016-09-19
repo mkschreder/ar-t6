@@ -22,7 +22,13 @@
  *
  */
 
-#include "stm32f10x.h"
+#include <stdbool.h>
+#include <stm32f10x.h>
+#include <stm32f10x_exti.h>
+#include <stm32f10x_gpio.h>
+#include <stm32f10x_misc.h>
+#include <stm32f10x_rcc.h>
+
 #include "keypad.h"
 #include "mixer.h"
 #include "tasks.h"
@@ -118,14 +124,14 @@ void keypad_init(void) {
  * @brief  Poll to see if a specific key has been pressed
  * @note
  * @param  key: Key to check.
- * @retval bool: TRUE if pressed, FALSE if not.
+ * @retval bool: true if pressed, false if not.
  */
 bool keypad_get_pressed(KEYPAD_KEY key) {
 	if ((keys_pressed & key) != 0) {
 		keys_pressed &= ~key;
-		return TRUE;
+		return true;
 	}
-	return FALSE;
+	return false;
 }
 
 /**
@@ -268,7 +274,7 @@ static void keypad_process(uint32_t data) {
  */
 KEYPAD_KEY keypad_scan_keys(void) {
 	KEYPAD_KEY key = KEY_NONE;
-	bool found = FALSE;
+	bool found = false;
 	uint16_t rows;
 	uint8_t col;
 
@@ -285,7 +291,7 @@ KEYPAD_KEY keypad_scan_keys(void) {
 		rows = GPIO_ReadInputData(GPIOB);
 		if ((rows & ROW_MASK) != ROW_MASK) {
 			// Only support one key pressed at a time.
-			found = TRUE;
+			found = true;
 			break;
 		}
 	}

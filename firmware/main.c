@@ -20,6 +20,8 @@
  */
 
 #include "stm32f10x.h"
+#include <stm32f10x_rcc.h>
+
 #include "tasks.h"
 #include "keypad.h"
 #include "sticks.h"

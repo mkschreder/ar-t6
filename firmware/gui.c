@@ -19,6 +19,8 @@
  * display and edit model and system variables.
  */
 
+#include <stdbool.h>
+
 #include "stm32f10x.h"
 #include "tasks.h"
 #include "lcd.h"
@@ -255,7 +257,7 @@ void gui_init(void) {
  * @retval None
  */
 void gui_process(uint32_t data) {
-	bool full = FALSE;
+	bool full = false;
 
 	// If we are currently displaying a popup,
 	// check the time and schedule a re-check.
@@ -322,7 +324,7 @@ void gui_process(uint32_t data) {
 			lcd_write_string((char*) g_model.name, LCD_OP_SET, CHAR_2X);
 		}
 
-		full = TRUE;
+		full = true;
 		g_new_layout = GUI_LAYOUT_NONE;
 	}
 
@@ -415,7 +417,7 @@ void gui_process(uint32_t data) {
 		if ((g_update_type & UPDATE_STICKS) != 0) {
 			const int top = 40;
 			int scale =
-					(g_model.extendedLimits == TRUE) ?
+					(g_model.extendedLimits == true) ?
 							PPM_LIMIT_EXTENDED : PPM_LIMIT_NORMAL;
 
 			// Left 4 sliders
@@ -451,7 +453,7 @@ void gui_process(uint32_t data) {
 		int left = 12;
 		const int spacing = 28;
 		int scale =
-				(g_model.extendedLimits == TRUE) ?
+				(g_model.extendedLimits == true) ?
 						PPM_LIMIT_EXTENDED : PPM_LIMIT_NORMAL;
 
 		lcd_draw_rect(left, top, left + spacing * 4 - 4, top + 16, LCD_OP_CLR,
@@ -1780,17 +1782,17 @@ static void gui_show_timer(int x, int y) {
  */
 static void gui_update_trim(void) {
 	// Update the trim bars.
-	gui_draw_trim(0, 8, FALSE, mixer_get_trim(STICK_L_V));
-	gui_draw_trim(11, 57, TRUE, mixer_get_trim(STICK_L_H));
-	gui_draw_trim(121, 8, FALSE, mixer_get_trim(STICK_R_V));
-	gui_draw_trim(67, 57, TRUE, mixer_get_trim(STICK_R_H));
+	gui_draw_trim(0, 8, false, mixer_get_trim(STICK_L_V));
+	gui_draw_trim(11, 57, true, mixer_get_trim(STICK_L_H));
+	gui_draw_trim(121, 8, false, mixer_get_trim(STICK_R_V));
+	gui_draw_trim(67, 57, true, mixer_get_trim(STICK_R_H));
 }
 
 /**
  * @brief  Display a trim bar with the supplied value
  * @note
  * @param  x, y: The TL position of the bar on screen.
- * @param  h_v: Whether the trim is horizontal (TRUE) or vertical (FALSE)
+ * @param  h_v: Whether the trim is horizontal (true) or vertical (false)
  * @param  value: The value of the trim (location of the rectangle) from -100 to +100.
  * @retval None
  */

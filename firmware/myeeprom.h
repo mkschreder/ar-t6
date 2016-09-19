@@ -16,6 +16,7 @@
 #ifndef eeprom_h
 #define eeprom_h
 
+#include <stdbool.h>
 #include "art6.h"
 
 #ifndef PACK

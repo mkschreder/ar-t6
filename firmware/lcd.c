@@ -24,7 +24,14 @@
 
 #include <string.h>
 
-#include "stm32f10x.h"
+#include <stdbool.h>
+#include <stm32f10x.h>
+#include <stm32f10x_exti.h>
+#include <stm32f10x_gpio.h>
+#include <stm32f10x_misc.h>
+#include <stm32f10x_rcc.h>
+
+
 #include "tasks.h"
 #include "lcd.h"
 
@@ -175,7 +182,7 @@ void lcd_init(void)
 	lcd_send_command(KS0713_DISP_ON_OFF | 0x01); 	// Turn on LCD panel (DON = 1)
 
 	lcd_update();
-	lcd_backlight(TRUE);
+	lcd_backlight(true);
 }
 
 /**
