@@ -128,6 +128,7 @@ am_libcmsis_stm32f10x_la_OBJECTS = libcmsis_stm32f10x_la-misc.lo \
 	libcmsis_stm32f10x_la-stm32f10x_crc.lo \
 	libcmsis_stm32f10x_la-stm32f10x_dac.lo \
 	libcmsis_stm32f10x_la-stm32f10x_dbgmcu.lo \
+	libcmsis_stm32f10x_la-stm32f10x_dma.lo \
 	libcmsis_stm32f10x_la-stm32f10x_exti.lo \
 	libcmsis_stm32f10x_la-stm32f10x_flash.lo \
 	libcmsis_stm32f10x_la-stm32f10x_fsmc.lo \
@@ -337,6 +338,7 @@ libcmsis_stm32f10x_la_SOURCES = misc.c \
 	stm32f10x_crc.c \
 	stm32f10x_dac.c \
 	stm32f10x_dbgmcu.c \
+	stm32f10x_dma.c \
 	stm32f10x_exti.c \
 	stm32f10x_flash.c \
 	stm32f10x_fsmc.c \
@@ -439,6 +441,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcmsis_stm32f10x_la-stm32f10x_crc.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcmsis_stm32f10x_la-stm32f10x_dac.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcmsis_stm32f10x_la-stm32f10x_dbgmcu.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcmsis_stm32f10x_la-stm32f10x_dma.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcmsis_stm32f10x_la-stm32f10x_exti.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcmsis_stm32f10x_la-stm32f10x_flash.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcmsis_stm32f10x_la-stm32f10x_fsmc.Plo@am__quote@
@@ -523,6 +526,13 @@ libcmsis_stm32f10x_la-stm32f10x_dbgmcu.lo: stm32f10x_dbgmcu.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='stm32f10x_dbgmcu.c' object='libcmsis_stm32f10x_la-stm32f10x_dbgmcu.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcmsis_stm32f10x_la_CFLAGS) $(CFLAGS) -c -o libcmsis_stm32f10x_la-stm32f10x_dbgmcu.lo `test -f 'stm32f10x_dbgmcu.c' || echo '$(srcdir)/'`stm32f10x_dbgmcu.c
+
+libcmsis_stm32f10x_la-stm32f10x_dma.lo: stm32f10x_dma.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcmsis_stm32f10x_la_CFLAGS) $(CFLAGS) -MT libcmsis_stm32f10x_la-stm32f10x_dma.lo -MD -MP -MF $(DEPDIR)/libcmsis_stm32f10x_la-stm32f10x_dma.Tpo -c -o libcmsis_stm32f10x_la-stm32f10x_dma.lo `test -f 'stm32f10x_dma.c' || echo '$(srcdir)/'`stm32f10x_dma.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libcmsis_stm32f10x_la-stm32f10x_dma.Tpo $(DEPDIR)/libcmsis_stm32f10x_la-stm32f10x_dma.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='stm32f10x_dma.c' object='libcmsis_stm32f10x_la-stm32f10x_dma.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcmsis_stm32f10x_la_CFLAGS) $(CFLAGS) -c -o libcmsis_stm32f10x_la-stm32f10x_dma.lo `test -f 'stm32f10x_dma.c' || echo '$(srcdir)/'`stm32f10x_dma.c
 
 libcmsis_stm32f10x_la-stm32f10x_exti.lo: stm32f10x_exti.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcmsis_stm32f10x_la_CFLAGS) $(CFLAGS) -MT libcmsis_stm32f10x_la-stm32f10x_exti.lo -MD -MP -MF $(DEPDIR)/libcmsis_stm32f10x_la-stm32f10x_exti.Tpo -c -o libcmsis_stm32f10x_la-stm32f10x_exti.lo `test -f 'stm32f10x_exti.c' || echo '$(srcdir)/'`stm32f10x_exti.c

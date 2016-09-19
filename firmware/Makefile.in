@@ -94,16 +94,24 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_ar_t6_firmware_OBJECTS = eeprom.$(OBJEXT) gui.$(OBJEXT) \
-	icons.$(OBJEXT) keypad.$(OBJEXT) lcd.$(OBJEXT) main.$(OBJEXT) \
-	mixer.$(OBJEXT) pulses.$(OBJEXT) sound.$(OBJEXT) \
-	sticks.$(OBJEXT) strings.$(OBJEXT) tasks.$(OBJEXT)
+am_ar_t6_firmware_OBJECTS = ar_t6_firmware-eeprom.$(OBJEXT) \
+	ar_t6_firmware-gui.$(OBJEXT) ar_t6_firmware-icons.$(OBJEXT) \
+	ar_t6_firmware-keypad.$(OBJEXT) ar_t6_firmware-lcd.$(OBJEXT) \
+	ar_t6_firmware-main.$(OBJEXT) ar_t6_firmware-mixer.$(OBJEXT) \
+	ar_t6_firmware-pulses.$(OBJEXT) ar_t6_firmware-sound.$(OBJEXT) \
+	ar_t6_firmware-sticks.$(OBJEXT) \
+	ar_t6_firmware-strings.$(OBJEXT) \
+	ar_t6_firmware-tasks.$(OBJEXT)
 ar_t6_firmware_OBJECTS = $(am_ar_t6_firmware_OBJECTS)
 ar_t6_firmware_LDADD = $(LDADD)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
+ar_t6_firmware_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(ar_t6_firmware_CFLAGS) $(CFLAGS) $(ar_t6_firmware_LDFLAGS) \
+	$(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -326,6 +334,8 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 SUBDIRS = peripherals system
 ar_t6_firmware_SOURCES = eeprom.c gui.c icons.c keypad.c lcd.c main.c mixer.c pulses.c sound.c sticks.c strings.c tasks.c 
+ar_t6_firmware_CFLAGS = -Iperipherals/inc/ -Isystem/ -std=c99
+ar_t6_firmware_LDFLAGS = -Lperipherals/src/.libs -Lsystem/.libs/ -lsys_stm32f10x -lcmsis_stm32f10x  -lc -lgcc -Tsystem/stm32_flash.ld
 ar_t6_firmware_disabled_CFLAGS = $(CODE_COVERAGE_CFLAGS) -std=gnu99 -Wall -Werror -Wno-format-y2k -W -Wstrict-prototypes -Wmissing-prototypes \
 -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch \
 -Wshadow -Wcast-align -Wchar-subscripts -Winline \
@@ -419,7 +429,7 @@ clean-binPROGRAMS:
 
 ar-t6-firmware$(EXEEXT): $(ar_t6_firmware_OBJECTS) $(ar_t6_firmware_DEPENDENCIES) $(EXTRA_ar_t6_firmware_DEPENDENCIES) 
 	@rm -f ar-t6-firmware$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(ar_t6_firmware_OBJECTS) $(ar_t6_firmware_LDADD) $(LIBS)
+	$(AM_V_CCLD)$(ar_t6_firmware_LINK) $(ar_t6_firmware_OBJECTS) $(ar_t6_firmware_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -427,18 +437,18 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eeprom.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gui.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/icons.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/keypad.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lcd.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mixer.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pulses.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sound.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sticks.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strings.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tasks.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ar_t6_firmware-eeprom.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ar_t6_firmware-gui.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ar_t6_firmware-icons.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ar_t6_firmware-keypad.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ar_t6_firmware-lcd.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ar_t6_firmware-main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ar_t6_firmware-mixer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ar_t6_firmware-pulses.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ar_t6_firmware-sound.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ar_t6_firmware-sticks.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ar_t6_firmware-strings.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ar_t6_firmware-tasks.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -460,6 +470,174 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
+
+ar_t6_firmware-eeprom.o: eeprom.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-eeprom.o -MD -MP -MF $(DEPDIR)/ar_t6_firmware-eeprom.Tpo -c -o ar_t6_firmware-eeprom.o `test -f 'eeprom.c' || echo '$(srcdir)/'`eeprom.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-eeprom.Tpo $(DEPDIR)/ar_t6_firmware-eeprom.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='eeprom.c' object='ar_t6_firmware-eeprom.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-eeprom.o `test -f 'eeprom.c' || echo '$(srcdir)/'`eeprom.c
+
+ar_t6_firmware-eeprom.obj: eeprom.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-eeprom.obj -MD -MP -MF $(DEPDIR)/ar_t6_firmware-eeprom.Tpo -c -o ar_t6_firmware-eeprom.obj `if test -f 'eeprom.c'; then $(CYGPATH_W) 'eeprom.c'; else $(CYGPATH_W) '$(srcdir)/eeprom.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-eeprom.Tpo $(DEPDIR)/ar_t6_firmware-eeprom.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='eeprom.c' object='ar_t6_firmware-eeprom.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-eeprom.obj `if test -f 'eeprom.c'; then $(CYGPATH_W) 'eeprom.c'; else $(CYGPATH_W) '$(srcdir)/eeprom.c'; fi`
+
+ar_t6_firmware-gui.o: gui.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-gui.o -MD -MP -MF $(DEPDIR)/ar_t6_firmware-gui.Tpo -c -o ar_t6_firmware-gui.o `test -f 'gui.c' || echo '$(srcdir)/'`gui.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-gui.Tpo $(DEPDIR)/ar_t6_firmware-gui.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='gui.c' object='ar_t6_firmware-gui.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-gui.o `test -f 'gui.c' || echo '$(srcdir)/'`gui.c
+
+ar_t6_firmware-gui.obj: gui.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-gui.obj -MD -MP -MF $(DEPDIR)/ar_t6_firmware-gui.Tpo -c -o ar_t6_firmware-gui.obj `if test -f 'gui.c'; then $(CYGPATH_W) 'gui.c'; else $(CYGPATH_W) '$(srcdir)/gui.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-gui.Tpo $(DEPDIR)/ar_t6_firmware-gui.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='gui.c' object='ar_t6_firmware-gui.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-gui.obj `if test -f 'gui.c'; then $(CYGPATH_W) 'gui.c'; else $(CYGPATH_W) '$(srcdir)/gui.c'; fi`
+
+ar_t6_firmware-icons.o: icons.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-icons.o -MD -MP -MF $(DEPDIR)/ar_t6_firmware-icons.Tpo -c -o ar_t6_firmware-icons.o `test -f 'icons.c' || echo '$(srcdir)/'`icons.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-icons.Tpo $(DEPDIR)/ar_t6_firmware-icons.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='icons.c' object='ar_t6_firmware-icons.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-icons.o `test -f 'icons.c' || echo '$(srcdir)/'`icons.c
+
+ar_t6_firmware-icons.obj: icons.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-icons.obj -MD -MP -MF $(DEPDIR)/ar_t6_firmware-icons.Tpo -c -o ar_t6_firmware-icons.obj `if test -f 'icons.c'; then $(CYGPATH_W) 'icons.c'; else $(CYGPATH_W) '$(srcdir)/icons.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-icons.Tpo $(DEPDIR)/ar_t6_firmware-icons.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='icons.c' object='ar_t6_firmware-icons.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-icons.obj `if test -f 'icons.c'; then $(CYGPATH_W) 'icons.c'; else $(CYGPATH_W) '$(srcdir)/icons.c'; fi`
+
+ar_t6_firmware-keypad.o: keypad.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-keypad.o -MD -MP -MF $(DEPDIR)/ar_t6_firmware-keypad.Tpo -c -o ar_t6_firmware-keypad.o `test -f 'keypad.c' || echo '$(srcdir)/'`keypad.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-keypad.Tpo $(DEPDIR)/ar_t6_firmware-keypad.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='keypad.c' object='ar_t6_firmware-keypad.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-keypad.o `test -f 'keypad.c' || echo '$(srcdir)/'`keypad.c
+
+ar_t6_firmware-keypad.obj: keypad.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-keypad.obj -MD -MP -MF $(DEPDIR)/ar_t6_firmware-keypad.Tpo -c -o ar_t6_firmware-keypad.obj `if test -f 'keypad.c'; then $(CYGPATH_W) 'keypad.c'; else $(CYGPATH_W) '$(srcdir)/keypad.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-keypad.Tpo $(DEPDIR)/ar_t6_firmware-keypad.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='keypad.c' object='ar_t6_firmware-keypad.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-keypad.obj `if test -f 'keypad.c'; then $(CYGPATH_W) 'keypad.c'; else $(CYGPATH_W) '$(srcdir)/keypad.c'; fi`
+
+ar_t6_firmware-lcd.o: lcd.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-lcd.o -MD -MP -MF $(DEPDIR)/ar_t6_firmware-lcd.Tpo -c -o ar_t6_firmware-lcd.o `test -f 'lcd.c' || echo '$(srcdir)/'`lcd.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-lcd.Tpo $(DEPDIR)/ar_t6_firmware-lcd.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='lcd.c' object='ar_t6_firmware-lcd.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-lcd.o `test -f 'lcd.c' || echo '$(srcdir)/'`lcd.c
+
+ar_t6_firmware-lcd.obj: lcd.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-lcd.obj -MD -MP -MF $(DEPDIR)/ar_t6_firmware-lcd.Tpo -c -o ar_t6_firmware-lcd.obj `if test -f 'lcd.c'; then $(CYGPATH_W) 'lcd.c'; else $(CYGPATH_W) '$(srcdir)/lcd.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-lcd.Tpo $(DEPDIR)/ar_t6_firmware-lcd.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='lcd.c' object='ar_t6_firmware-lcd.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-lcd.obj `if test -f 'lcd.c'; then $(CYGPATH_W) 'lcd.c'; else $(CYGPATH_W) '$(srcdir)/lcd.c'; fi`
+
+ar_t6_firmware-main.o: main.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-main.o -MD -MP -MF $(DEPDIR)/ar_t6_firmware-main.Tpo -c -o ar_t6_firmware-main.o `test -f 'main.c' || echo '$(srcdir)/'`main.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-main.Tpo $(DEPDIR)/ar_t6_firmware-main.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='main.c' object='ar_t6_firmware-main.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-main.o `test -f 'main.c' || echo '$(srcdir)/'`main.c
+
+ar_t6_firmware-main.obj: main.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-main.obj -MD -MP -MF $(DEPDIR)/ar_t6_firmware-main.Tpo -c -o ar_t6_firmware-main.obj `if test -f 'main.c'; then $(CYGPATH_W) 'main.c'; else $(CYGPATH_W) '$(srcdir)/main.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-main.Tpo $(DEPDIR)/ar_t6_firmware-main.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='main.c' object='ar_t6_firmware-main.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-main.obj `if test -f 'main.c'; then $(CYGPATH_W) 'main.c'; else $(CYGPATH_W) '$(srcdir)/main.c'; fi`
+
+ar_t6_firmware-mixer.o: mixer.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-mixer.o -MD -MP -MF $(DEPDIR)/ar_t6_firmware-mixer.Tpo -c -o ar_t6_firmware-mixer.o `test -f 'mixer.c' || echo '$(srcdir)/'`mixer.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-mixer.Tpo $(DEPDIR)/ar_t6_firmware-mixer.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='mixer.c' object='ar_t6_firmware-mixer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-mixer.o `test -f 'mixer.c' || echo '$(srcdir)/'`mixer.c
+
+ar_t6_firmware-mixer.obj: mixer.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-mixer.obj -MD -MP -MF $(DEPDIR)/ar_t6_firmware-mixer.Tpo -c -o ar_t6_firmware-mixer.obj `if test -f 'mixer.c'; then $(CYGPATH_W) 'mixer.c'; else $(CYGPATH_W) '$(srcdir)/mixer.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-mixer.Tpo $(DEPDIR)/ar_t6_firmware-mixer.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='mixer.c' object='ar_t6_firmware-mixer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-mixer.obj `if test -f 'mixer.c'; then $(CYGPATH_W) 'mixer.c'; else $(CYGPATH_W) '$(srcdir)/mixer.c'; fi`
+
+ar_t6_firmware-pulses.o: pulses.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-pulses.o -MD -MP -MF $(DEPDIR)/ar_t6_firmware-pulses.Tpo -c -o ar_t6_firmware-pulses.o `test -f 'pulses.c' || echo '$(srcdir)/'`pulses.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-pulses.Tpo $(DEPDIR)/ar_t6_firmware-pulses.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pulses.c' object='ar_t6_firmware-pulses.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-pulses.o `test -f 'pulses.c' || echo '$(srcdir)/'`pulses.c
+
+ar_t6_firmware-pulses.obj: pulses.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-pulses.obj -MD -MP -MF $(DEPDIR)/ar_t6_firmware-pulses.Tpo -c -o ar_t6_firmware-pulses.obj `if test -f 'pulses.c'; then $(CYGPATH_W) 'pulses.c'; else $(CYGPATH_W) '$(srcdir)/pulses.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-pulses.Tpo $(DEPDIR)/ar_t6_firmware-pulses.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pulses.c' object='ar_t6_firmware-pulses.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-pulses.obj `if test -f 'pulses.c'; then $(CYGPATH_W) 'pulses.c'; else $(CYGPATH_W) '$(srcdir)/pulses.c'; fi`
+
+ar_t6_firmware-sound.o: sound.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-sound.o -MD -MP -MF $(DEPDIR)/ar_t6_firmware-sound.Tpo -c -o ar_t6_firmware-sound.o `test -f 'sound.c' || echo '$(srcdir)/'`sound.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-sound.Tpo $(DEPDIR)/ar_t6_firmware-sound.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='sound.c' object='ar_t6_firmware-sound.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-sound.o `test -f 'sound.c' || echo '$(srcdir)/'`sound.c
+
+ar_t6_firmware-sound.obj: sound.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-sound.obj -MD -MP -MF $(DEPDIR)/ar_t6_firmware-sound.Tpo -c -o ar_t6_firmware-sound.obj `if test -f 'sound.c'; then $(CYGPATH_W) 'sound.c'; else $(CYGPATH_W) '$(srcdir)/sound.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-sound.Tpo $(DEPDIR)/ar_t6_firmware-sound.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='sound.c' object='ar_t6_firmware-sound.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-sound.obj `if test -f 'sound.c'; then $(CYGPATH_W) 'sound.c'; else $(CYGPATH_W) '$(srcdir)/sound.c'; fi`
+
+ar_t6_firmware-sticks.o: sticks.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-sticks.o -MD -MP -MF $(DEPDIR)/ar_t6_firmware-sticks.Tpo -c -o ar_t6_firmware-sticks.o `test -f 'sticks.c' || echo '$(srcdir)/'`sticks.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-sticks.Tpo $(DEPDIR)/ar_t6_firmware-sticks.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='sticks.c' object='ar_t6_firmware-sticks.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-sticks.o `test -f 'sticks.c' || echo '$(srcdir)/'`sticks.c
+
+ar_t6_firmware-sticks.obj: sticks.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-sticks.obj -MD -MP -MF $(DEPDIR)/ar_t6_firmware-sticks.Tpo -c -o ar_t6_firmware-sticks.obj `if test -f 'sticks.c'; then $(CYGPATH_W) 'sticks.c'; else $(CYGPATH_W) '$(srcdir)/sticks.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-sticks.Tpo $(DEPDIR)/ar_t6_firmware-sticks.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='sticks.c' object='ar_t6_firmware-sticks.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-sticks.obj `if test -f 'sticks.c'; then $(CYGPATH_W) 'sticks.c'; else $(CYGPATH_W) '$(srcdir)/sticks.c'; fi`
+
+ar_t6_firmware-strings.o: strings.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-strings.o -MD -MP -MF $(DEPDIR)/ar_t6_firmware-strings.Tpo -c -o ar_t6_firmware-strings.o `test -f 'strings.c' || echo '$(srcdir)/'`strings.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-strings.Tpo $(DEPDIR)/ar_t6_firmware-strings.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='strings.c' object='ar_t6_firmware-strings.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-strings.o `test -f 'strings.c' || echo '$(srcdir)/'`strings.c
+
+ar_t6_firmware-strings.obj: strings.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-strings.obj -MD -MP -MF $(DEPDIR)/ar_t6_firmware-strings.Tpo -c -o ar_t6_firmware-strings.obj `if test -f 'strings.c'; then $(CYGPATH_W) 'strings.c'; else $(CYGPATH_W) '$(srcdir)/strings.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-strings.Tpo $(DEPDIR)/ar_t6_firmware-strings.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='strings.c' object='ar_t6_firmware-strings.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-strings.obj `if test -f 'strings.c'; then $(CYGPATH_W) 'strings.c'; else $(CYGPATH_W) '$(srcdir)/strings.c'; fi`
+
+ar_t6_firmware-tasks.o: tasks.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-tasks.o -MD -MP -MF $(DEPDIR)/ar_t6_firmware-tasks.Tpo -c -o ar_t6_firmware-tasks.o `test -f 'tasks.c' || echo '$(srcdir)/'`tasks.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-tasks.Tpo $(DEPDIR)/ar_t6_firmware-tasks.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tasks.c' object='ar_t6_firmware-tasks.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-tasks.o `test -f 'tasks.c' || echo '$(srcdir)/'`tasks.c
+
+ar_t6_firmware-tasks.obj: tasks.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -MT ar_t6_firmware-tasks.obj -MD -MP -MF $(DEPDIR)/ar_t6_firmware-tasks.Tpo -c -o ar_t6_firmware-tasks.obj `if test -f 'tasks.c'; then $(CYGPATH_W) 'tasks.c'; else $(CYGPATH_W) '$(srcdir)/tasks.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ar_t6_firmware-tasks.Tpo $(DEPDIR)/ar_t6_firmware-tasks.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tasks.c' object='ar_t6_firmware-tasks.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ar_t6_firmware_CFLAGS) $(CFLAGS) -c -o ar_t6_firmware-tasks.obj `if test -f 'tasks.c'; then $(CYGPATH_W) 'tasks.c'; else $(CYGPATH_W) '$(srcdir)/tasks.c'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

@@ -6,6 +6,7 @@ libcmsis_stm32f10x_la_SOURCES=misc.c \
 	stm32f10x_crc.c \
 	stm32f10x_dac.c \
 	stm32f10x_dbgmcu.c \
+	stm32f10x_dma.c \
 	stm32f10x_exti.c \
 	stm32f10x_flash.c \
 	stm32f10x_fsmc.c \
