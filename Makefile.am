@@ -1,0 +1,4 @@
+ACLOCAL_AMFLAGS=-I m4
+SUBDIRS=firmware
+EXTRA_DIST=autogen.mk
+

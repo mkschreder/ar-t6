@@ -1,0 +1,2 @@
+lib_LTLIBRARIES=libsys_stm32f10x.la 
+libsys_stm32f10x_la_SOURCES=core_cm3.c startup_stm32f10x_md_vl.S system_stm32f10x.c
