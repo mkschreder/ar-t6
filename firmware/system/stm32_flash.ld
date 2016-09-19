@@ -1,86 +1,156 @@
-_ramstart = 0x20000000; 
-_estack = 0x20001FF0;
-_minimum_stack_size = 0x100; /* 256 bytes miniumum stack size */
+/* Linker script for STM32F407 */
 
+/* Linker script to configure memory regions. */
 MEMORY
-{
-	rom (rx)      : ORIGIN = 0x08000000, LENGTH = 128K
-	ram (xrw)     : ORIGIN = 0x20000000, LENGTH = 8K
+{ 
+  FLASH (rx) : ORIGIN = 0x08000000, LENGTH = 128k
+  RAM (rwx) : ORIGIN = 0x20000188, LENGTH = 0x2000-0x188 
 }
 
-/*
-* STM32 generic linker script 
-* 
-* CAN NOT BE USED ON IT'S OWN! 
-* MUST BE INCLUDED FROM DEVICE SPECIFIC LINKER SCRIPT!
-*/
-
+/* Linker script to place sections and symbol values. Should be used together
+ * with other linker script that defines memory regions FLASH and RAM.
+ * It references following symbols, which must be defined in code:
+ *   Reset_Handler : Entry of reset handler
+ * 
+ * It defines following symbols, which code can use without definition:
+ *   __exidx_start
+ *   __exidx_end
+ *   __etext
+ *   __data_start__
+ *   __preinit_array_start
+ *   __preinit_array_end
+ *   __init_array_start
+ *   __init_array_end
+ *   __fini_array_start
+ *   __fini_array_end
+ *   __data_end__
+ *   __bss_start__
+ *   __bss_end__
+ *   __end__
+ *   end
+ *   __HeapLimit
+ *   __StackLimit
+ *   __StackTop
+ *   __stack
+ */
 ENTRY(Reset_Handler)
 
 SECTIONS
 {
-  .text : 
-  {
-    KEEP(*(.isr_vector .isr_vector.*))
-    
-    *(.text)           /* .text sections (code) */
-    *(.text*)          /* .text* sections (code) */
-    *(.rodata)         /* .rodata sections (constants, strings, etc.) */
-    *(.rodata*)        /* .rodata* sections (constants, strings, etc.) */
-    
-    . = ALIGN(4);
-    __init_array_start = .;
-    KEEP(*(.init_array));
-    __init_array_end = .;
-    . = ALIGN(4);
-    KEEP (*(.init))
-    KEEP (*(.fini))
-    . = ALIGN(4);
-    _etext = .; 
-  } >rom
-  
-  /*now start ram area with initialized data section */
-  .data : 
-  {   
-    _sdata = .;        /* global needed for startup_stm3210x_md_vl.S */
-    *(.data)          
-    *(.data.*)         
-    . = ALIGN(4);
-    _edata = .;        /* global needed for startup_stm3210x_md_vl.S */
-  } >ram AT>rom
-	
-	.device_list : 
-  {   
-    _sdevice_info = .;        
-    KEEP(*(.device_info*))
-    . = ALIGN(4);
-    _edevice_info = .;  
-    _sdevice_meta = .;        
-    KEEP(*(.device_meta*))      
-    . = ALIGN(4);
-    _edevice_meta = .;       
-  } >rom
-  
-  /* uninitialized data section bss*/
-  .bss (NOLOAD): 
-  {
-      . = ALIGN(4);
-    _sbss = .;         /* global needed for startup_stm3210x_md_vl.S */
-    *(.bss)
-    *(.bss*)
-    . = ALIGN(4);
-    _ebss = .;        /* global needed for startup_stm3210x_md_vl.S */
-  } >ram
+    .text :
+    {
+        KEEP(*(.isr_vector))
+        *(.text*)
 
- 
-  /* Generates an error if minimum stack size is not left in ram */
-  ._check_stack_space :
-  {
-    . = ALIGN(4);
-    . = . + _minimum_stack_size;
-    . = ALIGN(4);
-  } >ram
+        KEEP(*(.init))
+        KEEP(*(.fini))
 
-  .ARM.attributes 0 : { KEEP (*(.ARM.attributes)) }
+        /* .ctors */
+        *crtbegin.o(.ctors)
+        *crtbegin?.o(.ctors)
+        *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
+        *(SORT(.ctors.*))
+        *(.ctors)
+
+        /* .dtors */
+        *crtbegin.o(.dtors)
+        *crtbegin?.o(.dtors)
+        *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
+        *(SORT(.dtors.*))
+        *(.dtors)
+
+        *(.rodata*)
+
+        KEEP(*(.eh_frame*))
+    } > FLASH
+
+    .ARM.extab : 
+    {
+        *(.ARM.extab* .gnu.linkonce.armextab.*)
+    } > FLASH
+
+    __exidx_start = .;
+    .ARM.exidx :
+    {
+        *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+    } > FLASH
+    __exidx_end = .;
+
+    __etext = .;
+	_sidata = .;
+        
+    .data : AT (__etext)
+    {
+        __data_start__ = .;
+		_sdata = .;
+        *(vtable)
+        *(.data*)
+
+        . = ALIGN(4);
+        /* preinit data */
+        PROVIDE_HIDDEN (__preinit_array_start = .);
+        KEEP(*(.preinit_array))
+        PROVIDE_HIDDEN (__preinit_array_end = .);
+
+        . = ALIGN(4);
+        /* init data */
+        PROVIDE_HIDDEN (__init_array_start = .);
+        KEEP(*(SORT(.init_array.*)))
+        KEEP(*(.init_array))
+        PROVIDE_HIDDEN (__init_array_end = .);
+
+
+        . = ALIGN(4);
+        /* finit data */
+        PROVIDE_HIDDEN (__fini_array_start = .);
+        KEEP(*(SORT(.fini_array.*)))
+        KEEP(*(.fini_array))
+        PROVIDE_HIDDEN (__fini_array_end = .);
+
+        KEEP(*(.jcr*))
+        . = ALIGN(4);
+        /* All data end */
+        __data_end__ = .;
+		_edata = .;
+
+    } > RAM
+
+    .bss :
+    {
+        . = ALIGN(4);
+        __bss_start__ = .;
+		_sbss = .;
+        *(.bss*)
+        *(COMMON)
+        . = ALIGN(4);
+        __bss_end__ = .;
+		_ebss = .;
+    } > RAM
+    
+    .heap (COPY):
+    {
+        __end__ = .;
+        end = __end__;
+        *(.heap*)
+        __HeapLimit = .;
+    } > RAM
+
+    /* .stack_dummy section doesn't contains any symbols. It is only
+     * used for linker to calculate size of stack sections, and assign
+     * values to stack symbols later */
+    .stack_dummy (COPY):
+    {
+        *(.stack*)
+    } > RAM
+
+    /* Set stack top to end of RAM, and stack limit move down by
+     * size of stack_dummy section */
+    __StackTop = ORIGIN(RAM) + LENGTH(RAM);
+	_estack = __StackTop;
+    __StackLimit = __StackTop - SIZEOF(.stack_dummy);
+    PROVIDE(__stack = __StackTop);
+    
+    /* Check if data + heap + stack exceeds RAM limit */
+    ASSERT(__StackLimit >= __HeapLimit, "region RAM overflowed with stack")
 }
 
