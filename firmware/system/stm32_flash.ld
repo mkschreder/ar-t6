@@ -1,139 +1,86 @@
-/* Entry Point */
-ENTRY(Reset_Handler)
+_ramstart = 0x20000000; 
+_estack = 0x20001FF0;
+_minimum_stack_size = 0x100; /* 256 bytes miniumum stack size */
 
-/* Stack End */
-_estack = 0x20002000;    /* SRAM end (8KB) */
-
-/* Generate a link error if heap and stack don't fit into RAM */
-_Min_Heap_Size = 0;      /* required amount of heap  */
-_Min_Stack_Size = 0x800; /* required amount of stack */
-
-/* Specify the memory areas */
 MEMORY
 {
-  FLASH (rx)      : ORIGIN = 0x08000000, LENGTH = 64K
-  RAM (xrw)       : ORIGIN = 0x20000000, LENGTH = 8K
-  MEMORY_B1 (rx)  : ORIGIN = 0x60000000, LENGTH = 0K
+	rom (rx)      : ORIGIN = 0x08000000, LENGTH = 128K
+	ram (xrw)     : ORIGIN = 0x20000000, LENGTH = 8K
 }
 
-/* Define output sections */
+/*
+* STM32 generic linker script 
+* 
+* CAN NOT BE USED ON IT'S OWN! 
+* MUST BE INCLUDED FROM DEVICE SPECIFIC LINKER SCRIPT!
+*/
+
+ENTRY(Reset_Handler)
+
 SECTIONS
 {
-  /* The startup code goes first into FLASH */
-  .isr_vector :
+  .text : 
   {
-    . = ALIGN(4);
-    KEEP(*(.isr_vector)) /* Startup code */
-    . = ALIGN(4);
-  } >FLASH
-
-  /* The program code and other data goes into FLASH */
-  .text :
-  {
-    . = ALIGN(4);
+    KEEP(*(.isr_vector .isr_vector.*))
+    
     *(.text)           /* .text sections (code) */
     *(.text*)          /* .text* sections (code) */
     *(.rodata)         /* .rodata sections (constants, strings, etc.) */
     *(.rodata*)        /* .rodata* sections (constants, strings, etc.) */
-    *(.glue_7)         /* glue arm to thumb code */
-    *(.glue_7t)        /* glue thumb to arm code */
-
+    
+    . = ALIGN(4);
+    __init_array_start = .;
+    KEEP(*(.init_array));
+    __init_array_end = .;
+    . = ALIGN(4);
     KEEP (*(.init))
     KEEP (*(.fini))
-
     . = ALIGN(4);
-    _etext = .;        /* define a global symbols at end of code */
-  } >FLASH
-
-
-   .ARM.extab   : { *(.ARM.extab* .gnu.linkonce.armextab.*) } >FLASH
-    .ARM : {
-    __exidx_start = .;
-      *(.ARM.exidx*)
-      __exidx_end = .;
-    } >FLASH
-
-  .ARM.attributes 0 : { *(.ARM.attributes) }
-
-  .preinit_array     :
-  {
-    PROVIDE_HIDDEN (__preinit_array_start = .);
-    KEEP (*(.preinit_array*))
-    PROVIDE_HIDDEN (__preinit_array_end = .);
-  } >FLASH
-  .init_array :
-  {
-    PROVIDE_HIDDEN (__init_array_start = .);
-    KEEP (*(SORT(.init_array.*)))
-    KEEP (*(.init_array*))
-    PROVIDE_HIDDEN (__init_array_end = .);
-  } >FLASH
-  .fini_array :
-  {
-    PROVIDE_HIDDEN (__fini_array_start = .);
-    KEEP (*(.fini_array*))
-    KEEP (*(SORT(.fini_array.*)))
-    PROVIDE_HIDDEN (__fini_array_end = .);
-  } >FLASH
-
-  /* used by the startup to initialize data */
-  _sidata = .;
-
-  /* Initialized data sections goes into RAM, load LMA copy after code */
-  .data : AT ( _sidata )
-  {
+    _etext = .; 
+  } >rom
+  
+  /*now start ram area with initialized data section */
+  .data : 
+  {   
+    _sdata = .;        /* global needed for startup_stm3210x_md_vl.S */
+    *(.data)          
+    *(.data.*)         
     . = ALIGN(4);
-    _sdata = .;        /* create a global symbol at data start */
-    *(.data)           /* .data sections */
-    *(.data*)          /* .data* sections */
-
+    _edata = .;        /* global needed for startup_stm3210x_md_vl.S */
+  } >ram AT>rom
+	
+	.device_list : 
+  {   
+    _sdevice_info = .;        
+    KEEP(*(.device_info*))
     . = ALIGN(4);
-    _edata = .;        /* define a global symbol at data end */
-  } >RAM
-
-  /* Uninitialized data section */
-  . = ALIGN(4);
-  .bss :
+    _edevice_info = .;  
+    _sdevice_meta = .;        
+    KEEP(*(.device_meta*))      
+    . = ALIGN(4);
+    _edevice_meta = .;       
+  } >rom
+  
+  /* uninitialized data section bss*/
+  .bss (NOLOAD): 
   {
-    /* This is used by the startup in order to initialize the .bss secion */
-    _sbss = .;         /* define a global symbol at bss start */
-    __bss_start__ = _sbss;
+      . = ALIGN(4);
+    _sbss = .;         /* global needed for startup_stm3210x_md_vl.S */
     *(.bss)
     *(.bss*)
-    *(COMMON)
-
     . = ALIGN(4);
-    _ebss = .;         /* define a global symbol at bss end */
-    __bss_end__ = _ebss;
-  } >RAM
+    _ebss = .;        /* global needed for startup_stm3210x_md_vl.S */
+  } >ram
 
-  PROVIDE ( end = _ebss );
-  PROVIDE ( _end = _ebss );
-
-  /* User_heap_stack section, used to check that there is enough RAM left */
-  ._user_heap_stack :
+ 
+  /* Generates an error if minimum stack size is not left in ram */
+  ._check_stack_space :
   {
     . = ALIGN(4);
-    . = . + _Min_Heap_Size;
-    . = . + _Min_Stack_Size;
+    . = . + _minimum_stack_size;
     . = ALIGN(4);
-  } >RAM
+  } >ram
 
-  /* MEMORY_bank1 section, code must be located here explicitly            */
-  /* Example: extern int foo(void) __attribute__ ((section (".mb1text"))); */
-  .memory_b1_text :
-  {
-    *(.mb1text)        /* .mb1text sections (code) */
-    *(.mb1text*)       /* .mb1text* sections (code)  */
-    *(.mb1rodata)      /* read-only data (constants) */
-    *(.mb1rodata*)
-  } >MEMORY_B1
-
-  /* Remove information from the standard libraries */
-  /DISCARD/ :
-  {
-    libc.a ( * )
-    libm.a ( * )
-    libgcc.a ( * )
-  }
+  .ARM.attributes 0 : { KEEP (*(.ARM.attributes)) }
 }
+
