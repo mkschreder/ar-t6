@@ -1,5 +1,3 @@
-SUBDIRS=peripherals system
-
 bin_PROGRAMS=ar-t6-firmware
 ar_t6_firmware_SOURCES=eeprom.c gui.c icons.c keypad.c lcd.c main.c mixer.c pulses.c sound.c sticks.c strings.c tasks.c 
 ar_t6_firmware_CFLAGS=$(LIBSTM32F10X_CFLAGS) -std=c99 
