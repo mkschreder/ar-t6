@@ -15,5 +15,5 @@ LT_INIT
 AC_PROG_CC
 AM_PROG_AS
 
-AC_OUTPUT(Makefile firmware/Makefile firmware/peripherals/Makefile firmware/peripherals/src/Makefile firmware/system/Makefile)
+AC_OUTPUT(Makefile firmware/Makefile)
 
