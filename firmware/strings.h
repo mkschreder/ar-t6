@@ -123,7 +123,7 @@ extern const char *mix_mode[MIX_MODE_MAX];
 extern const char *mix_src[MIX_SRC_MAX];
 extern const char *mix_warn[MIX_WARN_MAX];
 extern const char *menu_on_off[4];
-const char *channel_order[CHAN_ORDER_MAX];
+extern const char *channel_order[CHAN_ORDER_MAX];
 extern const char *system_menu_beeper[BEEPER_MAX];
 extern const char *msg[GUI_MSG_MAX];
 extern const char *system_menu_list1[SYS_MENU_LIST1_LEN];
